@@ -10,8 +10,11 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    let scoresLabel = SKLabelNode(fontNamed: "Chalkduster")
   var healthbar = SKSpriteNode(imageNamed: "HM10-1")
   let boy = SKSpriteNode(imageNamed: "BoyRun1")
+    var objcounter = 0
+    var scoreCount = 0;
     var mama = SKSpriteNode(imageNamed: "GirlMeele5")
   var lastUpdateTime: TimeInterval = 0
   var dt: TimeInterval = 0
@@ -26,6 +29,8 @@ class GameScene: SKScene {
     "hearthit.mp3", waitForCompletion: false)
   let objectCollisionSound: SKAction = SKAction.playSoundFileNamed(
     "knifehit.mp3", waitForCompletion: false)
+    let heartCollisionSound: SKAction = SKAction.playSoundFileNamed(
+    "hearthit.mp3", waitForCompletion: false)
   var invincible = false
   let catMovePointsPerSec:CGFloat = 480.0
   var lives = 10
@@ -68,7 +73,16 @@ class GameScene: SKScene {
     //addChild(cameraNode)
     //camera = cameraNode
     //cameraNode.position = CGPoint(x: size.width/2, y: size.height/2)
-    
+    scoresLabel.text = "Score : \(scoreCount)"
+    scoresLabel.fontColor = SKColor.red
+    scoresLabel.fontSize = 100
+    scoresLabel.zPosition = 150
+    scoresLabel.horizontalAlignmentMode = .left
+    scoresLabel.verticalAlignmentMode = .bottom
+    scoresLabel.position = CGPoint(
+        x: playableRect.maxX - 750,
+        y: playableRect.maxY - 40)
+    self.addChild(scoresLabel)
   }
   
     func healthBarRespawn()
@@ -89,7 +103,7 @@ class GameScene: SKScene {
   override func update(_ currentTime: TimeInterval) {
     
    
-    
+    scoresLabel.text = "Score : \(scoreCount)"
     healthBarRespawn()
     
     
@@ -154,27 +168,7 @@ class GameScene: SKScene {
     run(catCollisionSound)
   }
 
-  func boyHit(object: SKSpriteNode) {
-    invincible = true
-    let blinkTimes = 10.0
-    let duration = 3.0
-    let blinkAction = SKAction.customAction(withDuration: duration) { node, elapsedTime in
-      let slice = duration / blinkTimes
-      let remainder = Double(elapsedTime).truncatingRemainder(
-        dividingBy: slice)
-      node.isHidden = remainder > slice / 2
-    }
-    let setHidden = SKAction.run() { [weak self] in
-      self?.boy.isHidden = false
-      self?.invincible = false
-    }
-    boy.run(SKAction.sequence([blinkAction, setHidden]))
-    
-    run(objectCollisionSound)
-    
-    //loseCats()
-    lives -= 1
-  }
+  
 
   
   
@@ -359,13 +353,29 @@ class GameScene: SKScene {
     }
     
     
-    func spawnobject(randomY: CGFloat) {
+    func spawnobjectknife(randomY: CGFloat) {
       let object = SKSpriteNode(imageNamed: "knife-1")
       object.position = CGPoint(
         x: playableRect.maxX + object.size.width/2,
         y: randomY)
       object.zPosition = 50
       object.name = "object"
+        object.setScale(0.5)
+      addChild(object)
+      
+      let actionMove =
+        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 2.0)
+      let actionRemove = SKAction.removeFromParent()
+      object.run(SKAction.sequence([actionMove, actionRemove]))
+    }
+    
+    func spawnobjectheart(randomY: CGFloat) {
+      let object = SKSpriteNode(imageNamed: "heartsmall")
+      object.position = CGPoint(
+        x: playableRect.maxX + object.size.width/2,
+        y: randomY)
+      object.zPosition = 50
+      object.name = "heart"
         object.setScale(0.5)
       addChild(object)
       
@@ -392,7 +402,18 @@ class GameScene: SKScene {
       let actionRemove = SKAction.removeFromParent()
       mama.run(SKAction.sequence([actionMove, actionRemove]))
      startmamaAnimation()
-        spawnobject(randomY: randomY)
+        if(objcounter == 5)
+        {
+            spawnobjectheart(randomY: randomY)
+            objcounter = 0
+        }
+        else
+        {
+            spawnobjectknife(randomY: randomY)
+            objcounter+=1
+        }
+        
+    //spawnobjectknife(randomY: randomY)
     }
     
     
@@ -460,14 +481,57 @@ class GameScene: SKScene {
       var hitEnemies: [SKSpriteNode] = []
       enumerateChildNodes(withName: "object") { node, _ in
         let object = node as! SKSpriteNode
-        if node.frame.insetBy(dx: 20, dy: 20).intersects(
+        if node.frame.insetBy(dx: 5, dy: 5).intersects(
           self.boy.frame) {
           hitEnemies.append(object)
         }
       }
+        
       for object in hitEnemies {
         boyHit(object: object)
       }
+        
+        var hitHearts: [SKSpriteNode] = []
+        enumerateChildNodes(withName: "heart") { node, _ in
+          let object = node as! SKSpriteNode
+          if node.frame.insetBy(dx: 5, dy: 5).intersects(
+            self.boy.frame) {
+            hitHearts.append(object)
+          }
+        }
+          
+        for object in hitHearts {
+          boyHit(heart: object)
+        }
+    }
+    func boyHit(heart: SKSpriteNode) {
+        heart.removeFromParent()
+      run(heartCollisionSound)
+      scoreCount+=1
+        print("scorecount : \(scoreCount)")
+      //loseCats()
+    }
+    
+    func boyHit(object: SKSpriteNode) {
+      invincible = true
+      let blinkTimes = 10.0
+      let duration = 3.0
+      let blinkAction = SKAction.customAction(withDuration: duration) { node, elapsedTime in
+        let slice = duration / blinkTimes
+        let remainder = Double(elapsedTime).truncatingRemainder(
+          dividingBy: slice)
+        node.isHidden = remainder > slice / 2
+      }
+      let setHidden = SKAction.run() { [weak self] in
+        self?.boy.isHidden = false
+        self?.invincible = false
+      }
+      boy.run(SKAction.sequence([blinkAction, setHidden]))
+      
+      run(objectCollisionSound)
+      
+      //loseCats()
+      lives -= 1
     }
     
     override func didEvaluateActions() {
