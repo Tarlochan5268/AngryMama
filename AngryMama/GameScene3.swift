@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene3: SKScene {
     let scoresLabel = SKLabelNode(fontNamed: "Chalkduster")
-  var healthbar = SKSpriteNode(imageNamed: "HM10-1")
+  var healthbar = SKSpriteNode(imageNamed: "xHM15-1")
   let boy = SKSpriteNode(imageNamed: "BoyRun1")
     var objcounter = 0
     var heartcounter = 0
@@ -34,7 +34,7 @@ class GameScene3: SKScene {
     "hearthit.mp3", waitForCompletion: false)
   var invincible = false
   let catMovePointsPerSec:CGFloat = 480.0
-  var lives = 10
+  var lives = 15
   var gameOver = false
   //let cameraNode = SKCameraNode()
   //let cameraMovePointsPerSec: CGFloat = 200.0
@@ -60,7 +60,7 @@ class GameScene3: SKScene {
     boy.setScale(0.5)
     addChild(boy)
     // boy.run(SKAction.repeatForever(boyAnimation))
-    spawnHealthBar(imageNamed: "HM10-1")
+    spawnHealthBar(imageNamed: "xHM15-1")
     run(SKAction.repeatForever(
       SKAction.sequence([SKAction.run() { [weak self] in
                       self?.spawnMama()
@@ -88,17 +88,21 @@ class GameScene3: SKScene {
   
     func healthBarRespawn()
     {
-        if(lives == 9){
-               spawnHealthBar(imageNamed: "HM9-1")}
-           else if(lives == 8){spawnHealthBar(imageNamed: "HM8-1")}
-           else if(lives == 7){spawnHealthBar(imageNamed: "HM7-1")}
-           else if(lives == 6){spawnHealthBar(imageNamed: "HM6-1")}
-           else if(lives == 5){spawnHealthBar(imageNamed: "HM5-1")}
-           else if(lives == 4){spawnHealthBar(imageNamed: "HM4-1")}
-           else if(lives == 3){spawnHealthBar(imageNamed: "HM3-1")}
-           else if(lives == 2){spawnHealthBar(imageNamed: "HM2-1")}
-           else if(lives == 1){spawnHealthBar(imageNamed: "HM1-1")}
-           else if(lives == 0){spawnHealthBar(imageNamed: "HM0-1")}
+            if(lives == 14){spawnHealthBar(imageNamed: "xHM14-1")}
+            else if(lives == 13){spawnHealthBar(imageNamed: "xHM13-1")}
+            else if(lives == 12){spawnHealthBar(imageNamed: "xHM12-1")}
+            else if(lives == 11){spawnHealthBar(imageNamed: "xHM11-1")}
+            else if(lives == 10){spawnHealthBar(imageNamed: "xHM10-1")}
+            else if(lives == 9){spawnHealthBar(imageNamed: "xHM9-1")}
+           else if(lives == 8){spawnHealthBar(imageNamed: "xHM8-1")}
+           else if(lives == 7){spawnHealthBar(imageNamed: "xHM7-1")}
+           else if(lives == 6){spawnHealthBar(imageNamed: "xHM6-1")}
+           else if(lives == 5){spawnHealthBar(imageNamed: "xHM5-1")}
+           else if(lives == 4){spawnHealthBar(imageNamed: "xHM4-1")}
+           else if(lives == 3){spawnHealthBar(imageNamed: "xHM3-1")}
+           else if(lives == 2){spawnHealthBar(imageNamed: "xHM2-1")}
+           else if(lives == 1){spawnHealthBar(imageNamed: "xHM1-1")}
+           else if(lives == 0){spawnHealthBar(imageNamed: "xHM0-1")}
            
     }
   override func update(_ currentTime: TimeInterval) {
