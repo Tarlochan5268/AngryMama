@@ -24,6 +24,7 @@
 		845122D6249F989A00FF1CBF /* panhit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845122CD249F989A00FF1CBF /* panhit.mp3 */; };
 		845122D7249F989A00FF1CBF /* knifehit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845122CE249F989A00FF1CBF /* knifehit.mp3 */; };
 		845122D8249F989A00FF1CBF /* BGMusicFinalLevel.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845122CF249F989A00FF1CBF /* BGMusicFinalLevel.mp3 */; };
+		845122DA249F996F00FF1CBF /* Myutils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845122D9249F996F00FF1CBF /* Myutils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		845122CD249F989A00FF1CBF /* panhit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = panhit.mp3; sourceTree = "<group>"; };
 		845122CE249F989A00FF1CBF /* knifehit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = knifehit.mp3; sourceTree = "<group>"; };
 		845122CF249F989A00FF1CBF /* BGMusicFinalLevel.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGMusicFinalLevel.mp3; sourceTree = "<group>"; };
+		845122D9249F996F00FF1CBF /* Myutils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Myutils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				845122BD249F955E00FF1CBF /* LaunchScreen.storyboard */,
 				845122C0249F955E00FF1CBF /* Info.plist */,
 				845122C6249F989A00FF1CBF /* Sound */,
+				845122D9249F996F00FF1CBF /* Myutils.swift */,
 			);
 			path = AngryMama;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				845122B5249F955C00FF1CBF /* GameScene.swift in Sources */,
 				845122B7249F955C00FF1CBF /* GameViewController.swift in Sources */,
 				845122AF249F955C00FF1CBF /* AppDelegate.swift in Sources */,
+				845122DA249F996F00FF1CBF /* Myutils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
