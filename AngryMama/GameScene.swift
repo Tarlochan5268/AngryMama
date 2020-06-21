@@ -14,6 +14,7 @@ class GameScene: SKScene {
   var healthbar = SKSpriteNode(imageNamed: "HM10-1")
   let boy = SKSpriteNode(imageNamed: "BoyRun1")
     var objcounter = 0
+    var heartcounter = 0
     var scoreCount = 0;
     var mama = SKSpriteNode(imageNamed: "GirlMeele5")
   var lastUpdateTime: TimeInterval = 0
@@ -364,7 +365,7 @@ class GameScene: SKScene {
       addChild(object)
       
       let actionMove =
-        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 2.0)
+        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 3.0)
       let actionRemove = SKAction.removeFromParent()
       object.run(SKAction.sequence([actionMove, actionRemove]))
     }
@@ -380,7 +381,7 @@ class GameScene: SKScene {
       addChild(object)
       
       let actionMove =
-        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 2.0)
+        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 3.0)
       let actionRemove = SKAction.removeFromParent()
       object.run(SKAction.sequence([actionMove, actionRemove]))
     }
@@ -404,8 +405,16 @@ class GameScene: SKScene {
      startmamaAnimation()
         if(objcounter == 5)
         {
-            spawnobjectheart(randomY: randomY)
-            objcounter = 0
+            if(heartcounter < 4)
+            {
+                spawnobjectheart(randomY: randomY)
+                heartcounter+=1
+                if(heartcounter == 4)
+                {
+                    heartcounter = 0
+                    objcounter = 0
+                }
+            }
         }
         else
         {
