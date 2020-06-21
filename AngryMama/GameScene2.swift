@@ -372,6 +372,39 @@ class GameScene2: SKScene {
       mama.removeAction(forKey: "animation")
     }
     
+    func spawnobject(randomY: CGFloat) {
+        var object = SKSpriteNode(imageNamed: "knife-1")
+        if(objcounter == 1)
+        {
+            object = SKSpriteNode(imageNamed: "fork-1")
+        }
+        else if(objcounter == 2)
+        {
+            object = SKSpriteNode(imageNamed: "pan2-2")
+        }
+        else if(objcounter == 3)
+        {
+            object = SKSpriteNode(imageNamed: "spoon-1")
+        }
+        else
+        {
+            object = SKSpriteNode(imageNamed: "knife-1")
+        }
+        
+        //let object = SKSpriteNode(imageNamed: "knife-1")
+      object.position = CGPoint(
+        x: playableRect.maxX + object.size.width/2,
+        y: randomY)
+      object.zPosition = 50
+      object.name = "object"
+        object.setScale(0.5)
+      addChild(object)
+      
+      let actionMove =
+        SKAction.moveBy(x: -(size.width + object.size.width), y: 0, duration: 3.0)
+      let actionRemove = SKAction.removeFromParent()
+      object.run(SKAction.sequence([actionMove, actionRemove]))
+    }
     
     func spawnobjectknife(randomY: CGFloat) {
       let object = SKSpriteNode(imageNamed: "knife-1")
@@ -437,7 +470,7 @@ class GameScene2: SKScene {
         }
         else
         {
-            spawnobjectknife(randomY: randomY)
+            spawnobject(randomY: randomY)
             objcounter+=1
         }
         
