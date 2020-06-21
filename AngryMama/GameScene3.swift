@@ -32,6 +32,8 @@ class GameScene3: SKScene {
     "knifehit.mp3", waitForCompletion: false)
     let heartCollisionSound: SKAction = SKAction.playSoundFileNamed(
     "hearthit.mp3", waitForCompletion: false)
+    let panCollisionSound: SKAction = SKAction.playSoundFileNamed(
+    "panhit.mp3", waitForCompletion: false)
   var invincible = false
   let catMovePointsPerSec:CGFloat = 480.0
   var lives = 15
@@ -396,6 +398,7 @@ class GameScene3: SKScene {
     
     func spawnobject(randomY: CGFloat) {
         var object = SKSpriteNode(imageNamed: "knife-1")
+        object.name = "object"
         if(objcounter == 1)
         {
             object = SKSpriteNode(imageNamed: "fork-1")
@@ -403,6 +406,7 @@ class GameScene3: SKScene {
         else if(objcounter == 2)
         {
             object = SKSpriteNode(imageNamed: "pan2-2")
+            object.name = "pan"
         }
         else if(objcounter == 3)
         {
@@ -418,7 +422,7 @@ class GameScene3: SKScene {
         x: playableRect.maxX + object.size.width/2,
         y: randomY)
       object.zPosition = 50
-      object.name = "object"
+      //object.name = "object"
         object.setScale(0.5)
       addChild(object)
       
@@ -557,6 +561,19 @@ class GameScene3: SKScene {
       for object in hitEnemies {
         boyHit(object: object)
       }
+        //pan
+        var hitPans: [SKSpriteNode] = []
+        enumerateChildNodes(withName: "pan") { node, _ in
+          let pan = node as! SKSpriteNode
+          if node.frame.insetBy(dx: 5, dy: 5).intersects(
+            self.boy.frame) {
+            hitPans.append(pan)
+          }
+        }
+        
+        for pan in hitPans {
+          boyHit(pan: pan)
+        }
         
         var hitHearts: [SKSpriteNode] = []
         enumerateChildNodes(withName: "heart") { node, _ in
@@ -599,6 +616,28 @@ class GameScene3: SKScene {
       
       //loseCats()
       lives -= 1
+    }
+    
+    func boyHit(pan: SKSpriteNode) {
+      invincible = true
+      let blinkTimes = 10.0
+      let duration = 3.0
+      let blinkAction = SKAction.customAction(withDuration: duration) { node, elapsedTime in
+        let slice = duration / blinkTimes
+        let remainder = Double(elapsedTime).truncatingRemainder(
+          dividingBy: slice)
+        node.isHidden = remainder > slice / 2
+      }
+      let setHidden = SKAction.run() { [weak self] in
+        self?.boy.isHidden = false
+        self?.invincible = false
+      }
+      boy.run(SKAction.sequence([blinkAction, setHidden]))
+      
+      run(panCollisionSound)
+      
+      //loseCats()
+      lives -= 2
     }
     
     override func didEvaluateActions() {
