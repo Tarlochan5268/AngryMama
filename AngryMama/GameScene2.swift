@@ -9,13 +9,13 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene2: SKScene {
     let scoresLabel = SKLabelNode(fontNamed: "Chalkduster")
   var healthbar = SKSpriteNode(imageNamed: "HM10-1")
   let boy = SKSpriteNode(imageNamed: "BoyRun1")
     var objcounter = 0
     var heartcounter = 0
-    var scoreCount = 9;
+    var scoreCount = 14;
     var mama = SKSpriteNode(imageNamed: "GirlMeele5")
   var lastUpdateTime: TimeInterval = 0
   var dt: TimeInterval = 0
@@ -45,12 +45,12 @@ class GameScene: SKScene {
   
   override func didMove(to view: SKView) {
 
-    playBackgroundMusic(filename: "BGMusicOption1.mp3")
+    playBackgroundMusic(filename: "BGMusicOption2.mp3")
   
-      let background = SKSpriteNode(imageNamed: "KitchenGameBg1")
+      let background = SKSpriteNode(imageNamed: "CampGameBg1-1")
       background.anchorPoint = CGPoint.zero
     background.position = CGPoint.zero
-      background.name = "KitchenGameBg1"
+      background.name = "CampGameBg1-1"
     background.size = CGSize(width: 2048, height: 1536)
       background.zPosition = -1
       addChild(background)
@@ -148,15 +148,15 @@ class GameScene: SKScene {
       // 3
       view?.presentScene(gameOverScene, transition: reveal)
     }
-    if lives > 0 && !gameOver && scoreCount == 10 {
+    if lives > 0 && !gameOver && scoreCount == 15 {
       gameOver = true
-      print("You Go to Level 2!")
+      print("You Go to Level 3!")
       backgroundMusicPlayer.stop()
-      let gameScene2 = GameScene2(size:CGSize(width: 2048, height: 1536))
+      let gameScene3 = GameScene3(size:CGSize(width: 2048, height: 1536))
       
         //let skView = self.view!// SpriteKit makes no guarantee as to the order in which a node draws its child nodes that share the same zPosition.
-      gameScene2.scaleMode = .aspectFill
-      view?.presentScene(gameScene2)
+      gameScene3.scaleMode = .aspectFill
+      view?.presentScene(gameScene3)
         
         
       // 1
@@ -167,7 +167,6 @@ class GameScene: SKScene {
       // 3
       //view?.presentScene(gameScene2)
     }
-    
     
     // cameraNode.position = boy.position
     
@@ -425,11 +424,11 @@ class GameScene: SKScene {
      startmamaAnimation()
         if(objcounter == 5)
         {
-            if(heartcounter < 4)
+            if(heartcounter < 2)
             {
                 spawnobjectheart(randomY: randomY)
                 heartcounter+=1
-                if(heartcounter == 4)
+                if(heartcounter == 2)
                 {
                     heartcounter = 0
                     objcounter = 0
