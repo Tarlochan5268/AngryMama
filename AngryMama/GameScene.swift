@@ -15,7 +15,7 @@ class GameScene: SKScene {
   let boy = SKSpriteNode(imageNamed: "BoyRun1")
     var objcounter = 0
     var heartcounter = 0
-    var scoreCount = 9;
+    var scoreCount = 0;
     var mama = SKSpriteNode(imageNamed: "GirlMeele5")
   var lastUpdateTime: TimeInterval = 0
   var dt: TimeInterval = 0
@@ -26,22 +26,13 @@ class GameScene: SKScene {
   let boyRotateRadiansPerSec:CGFloat = 4.0 * π
   let boyAnimation: SKAction
     let mamaAnimation: SKAction
-  let catCollisionSound: SKAction = SKAction.playSoundFileNamed(
-    "hearthit.mp3", waitForCompletion: false)
   let objectCollisionSound: SKAction = SKAction.playSoundFileNamed(
     "knifehit.mp3", waitForCompletion: false)
     let heartCollisionSound: SKAction = SKAction.playSoundFileNamed(
     "hearthit.mp3", waitForCompletion: false)
   var invincible = false
-  let catMovePointsPerSec:CGFloat = 480.0
   var lives = 10
   var gameOver = false
-  //let cameraNode = SKCameraNode()
-  //let cameraMovePointsPerSec: CGFloat = 200.0
-
-  
-  
-  
   
   override func didMove(to view: SKView) {
 
@@ -67,13 +58,6 @@ class GameScene: SKScene {
                     },
                     SKAction.wait(forDuration: 2.0)])))
 
-    //run(SKAction.repeatForever(SKAction.sequence([SKAction.run() { [weak self] in self?.spawnCat()},SKAction.wait(forDuration: 1.0)])))
-    
-    // debugDrawPlayableArea()
-    
-    //addChild(cameraNode)
-    //camera = cameraNode
-    //cameraNode.position = CGPoint(x: size.width/2, y: size.height/2)
     scoresLabel.text = "Score : \(scoreCount)"
     scoresLabel.fontColor = SKColor.red
     scoresLabel.fontSize = 100
@@ -115,25 +99,9 @@ class GameScene: SKScene {
     }
     lastUpdateTime = currentTime
   
-    /*
-    if let lastTouchLocation = lastTouchLocation {
-      let diff = lastTouchLocation - boy.position
-      if diff.length() <= boyMovePointsPerSec * CGFloat(dt) {
-        boy.position = lastTouchLocation
-        velocity = CGPoint.zero
-        stopboyAnimation()
-      } else {
-      */
         move(sprite: boy, velocity: velocity)
-        //rotate(sprite: boy, direction: velocity,
-          //rotateRadiansPerSec: boyRotateRadiansPerSec)
-      /*}
-    }*/
   
     boundsCheckboy()
-    // checkCollisions()
-    moveTrain()
-    //moveCamera()
     
     if lives <= 0 && !gameOver {
       gameOver = true
@@ -158,78 +126,9 @@ class GameScene: SKScene {
       gameScene2.scaleMode = .aspectFill
       view?.presentScene(gameScene2)
         
-        
-      // 1
-      //let gameScene2 = GameScene2(size: size)
-      //gameScene2.scaleMode = scaleMode
-      // 2
-      //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-      // 3
-      //view?.presentScene(gameScene2)
     }
-    
-    
-    // cameraNode.position = boy.position
-    
   }
   
-  
-  
-
-  func boyHit(cat: SKSpriteNode) {
-    cat.name = "train"
-    cat.removeAllActions()
-    cat.setScale(0.5)
-    cat.zRotation = 0
-    
-    //let turnGreen = SKAction.colorize(with: SKColor.green, colorBlendFactor: 1.0, duration: 0.2)
-    //cat.run(turnGreen)
-    cat.isHidden = true
-    
-    run(catCollisionSound)
-  }
-
-  
-
-  
-  
-  
-  
-  func moveTrain() {
-  
-    var trainCount = 0
-    var targetPosition = boy.position
-    
-    enumerateChildNodes(withName: "train") { node, stop in
-      trainCount += 1
-      if !node.hasActions() {
-        let actionDuration = 0.3
-        let offset = targetPosition - node.position
-        let direction = offset.normalized()
-        let amountToMovePerSec = direction * self.catMovePointsPerSec
-        let amountToMove = amountToMovePerSec * CGFloat(actionDuration)
-        let moveAction = SKAction.moveBy(x: amountToMove.x, y: amountToMove.y, duration: actionDuration)
-        node.run(moveAction)
-      }
-      targetPosition = node.position
-    }
-    
-    if trainCount >= 15 && !gameOver {
-      gameOver = true
-      print("You win!")
-      backgroundMusicPlayer.stop()
-      
-      // 1
-      let gameOverScene = GameOver(size: size, won: true)
-      gameOverScene.scaleMode = scaleMode
-      // 2
-      let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-      // 3
-      view?.presentScene(gameOverScene, transition: reveal)
-    }
-    
-  }
-    
     // Change later
     
     override init(size: CGSize) {
@@ -339,13 +238,6 @@ class GameScene: SKScene {
           velocity.y = -velocity.y
         }
     }
-    /*
-    func rotate(sprite: SKSpriteNode, direction: CGPoint, rotateRadiansPerSec: CGFloat) {
-      let shortest = shortestAngleBetween(angle1: sprite.zRotation, angle2: velocity.angle)
-      let amountToRotate = min(rotateRadiansPerSec * CGFloat(dt), abs(shortest))
-      sprite.zRotation += shortest.sign() * amountToRotate
-    }
- */
     
     
     
@@ -407,7 +299,6 @@ class GameScene: SKScene {
     }
     
     func spawnMama() {
-      //let mama = SKSpriteNode(imageNamed: "GirlMeele1")
         mama.removeFromParent()
         mama = SKSpriteNode(imageNamed: "GirlMeele5")
         mama.setScale(0.5)
@@ -442,7 +333,6 @@ class GameScene: SKScene {
             objcounter+=1
         }
         
-    //spawnobjectknife(randomY: randomY)
     }
     
     
@@ -455,53 +345,7 @@ class GameScene: SKScene {
       addChild(healthbar)
     }
     
-    
-    func spawnCat() {
-      // 1
-      let cat = SKSpriteNode(imageNamed: "heartsmall-1")
-      cat.name = "cat"
-      cat.position = CGPoint(
-        x: CGFloat.random(min: playableRect.minX,
-                          max: playableRect.maxX),
-        y: CGFloat.random(min: playableRect.minY,
-                          max: playableRect.maxY))
-      cat.zPosition = 50
-        //cat.decreaseSize(1)
-        //cat.setScale(0)
-      addChild(cat)
-      // 2
-      let appear = SKAction.scale(to: 1.0, duration: 0.5)
-
-      cat.zRotation = -π / 16.0
-      let leftWiggle = SKAction.rotate(byAngle: π/8.0, duration: 0.5)
-      let rightWiggle = leftWiggle.reversed()
-      let fullWiggle = SKAction.sequence([leftWiggle, rightWiggle])
-      
-      let scaleUp = SKAction.scale(by: 1.2, duration: 0.25)
-      let scaleDown = scaleUp.reversed()
-      let fullScale = SKAction.sequence(
-        [scaleUp, scaleDown, scaleUp, scaleDown])
-      let group = SKAction.group([fullScale, fullWiggle])
-      let groupWait = SKAction.repeat(group, count: 10)
-      
-      let disappear = SKAction.scale(to: 0, duration: 0.5)
-      let removeFromParent = SKAction.removeFromParent()
-      let actions = [appear, groupWait, disappear, removeFromParent]
-      cat.run(SKAction.sequence(actions))
-    }
-    
     func checkCollisions() {
-      var hitCats: [SKSpriteNode] = []
-      enumerateChildNodes(withName: "cat") { node, _ in
-        let cat = node as! SKSpriteNode
-        if cat.frame.intersects(self.boy.frame) {
-          hitCats.append(cat)
-        }
-      }
-      
-      for cat in hitCats {
-        boyHit(cat: cat)
-      }
       
       if invincible {
         return
@@ -538,7 +382,7 @@ class GameScene: SKScene {
       run(heartCollisionSound)
       scoreCount+=1
         print("scorecount : \(scoreCount)")
-      //loseCats()
+    
     }
     
     func boyHit(object: SKSpriteNode) {
@@ -559,46 +403,12 @@ class GameScene: SKScene {
       
       run(objectCollisionSound)
       
-      //loseCats()
       lives -= 1
     }
     
     override func didEvaluateActions() {
       checkCollisions()
     }
-    
-    /*
-    func moveCamera() {
-      let backgroundVelocity =
-        CGPoint(x: cameraMovePointsPerSec, y: 0)
-      let amountToMove = backgroundVelocity * CGFloat(dt)
-      cameraNode.position += amountToMove
-      
-      enumerateChildNodes(withName: "background") { node, _ in
-        let background = node as! SKSpriteNode
-        if background.position.x + background.size.width <
-            self.cameraRect.origin.x {
-          background.position = CGPoint(
-            x: background.position.x + background.size.width*2,
-            y: background.position.y)
-        }
-      }
-      
-    }
- */
-    /*
-    var cameraRect : CGRect {
-      let x = cameraNode.position.x - size.width/2
-          + (size.width - playableRect.width)/2
-      let y = cameraNode.position.y - size.height/2
-          + (size.height - playableRect.height)/2
-      return CGRect(
-        x: x,
-        y: y,
-        width: playableRect.width,
-        height: playableRect.height)
-    }
- */
     
     func debugDrawPlayableArea() {
       let shape = SKShapeNode()
