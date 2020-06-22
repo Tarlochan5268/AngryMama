@@ -152,7 +152,7 @@ class GameScene: SKScene {
       gameOver = true
       print("You Go to Level 2!")
       backgroundMusicPlayer.stop()
-      let gameScene2 = GameScene2(size:CGSize(width: 2048, height: 1536))
+      let gameScene2 = GameSceneInstruction(size:CGSize(width: 2048, height: 1536),levelwon: 1)
       
         //let skView = self.view!// SpriteKit makes no guarantee as to the order in which a node draws its child nodes that share the same zPosition.
       gameScene2.scaleMode = .aspectFill
