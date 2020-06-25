@@ -54,21 +54,85 @@ height = "40%"
 <img
 src="Screenshots/MamaAnimation.gif"
 raw=true
-width="50%"
-height = "40%"
+align="left"
+width="33%"
+height = "28%"
 /> 
 
 <img
 src="Screenshots/BoyAnimation.gif"
 raw=true
-width="50%"
-height = "40%"
+align="center"
+width="33%"
+height = "28%"
 /> 
 
 <img
 src="Screenshots/HealthMeterAnimation.gif"
 raw=true
-width="50%"
-height = "40%"
+align="right"
+width="33%"
+height = "28%"
+/> 
+<br>
+<br>
+# ScreenShots:
+<br>
+<img
+src="Screenshots/TitleScreen.png"
+raw=true
+width="30%"
+height = "20%"
+/> 
+<br>
+<br>
+<img
+src="Screenshots/1.png"
+raw=true
+align="left"
+width="30%"
+height = "20%"
+/> 
+<img
+src="Screenshots/Instruction2.png"
+raw=true
+align="right"
+width=30%"
+height = "20%"
+/> 
+<img
+src="Screenshots/4.png"
+raw=true
+align="left"
+width="30%"
+height = "20%"
+/> 
+<img
+src="Screenshots/Instruction3.png"
+raw=true
+align="center"
+width="30%"
+height = "20%"
+/> 
+<img
+src="Screenshots/5.png"
+raw=true
+align="right"
+width="30%"
+height = "20%"
+/> 
+
+<img
+src="Screenshots/GameLose.png"
+raw=true
+width="30%"
+height = "20%"
+/> 
+
+<img
+src="Screenshots/GameWin.png"
+raw=true
+width="30%"
+height = "20%"
 /> 
 <br>
