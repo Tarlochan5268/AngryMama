@@ -25,7 +25,7 @@ Final Project Repository of the Game Angry Mama for MAD5244 Game Design and Deve
 - Detect when the player wins & YOU WIN screen is shown.
 - Plays Background sound, weapon hit sounds, love hit sound, win or lose game sound.
 
-# Screenshots:
+# Animations:
 <br>
 <img
 src="Screenshots/gameplay.gif"
@@ -34,4 +34,41 @@ width="50%"
 height = "40%"
 /> 
 <br>
+<br>
+<img
+src="Screenshots/GameAnimation.gif"
+raw=true
+width="50%"
+height = "40%"
+/> 
+<br>
+<br>
+<img
+src="Screenshots/GameMake.gif"
+raw=true
+width="50%"
+height = "40%"
+/> 
+<br>
+<br>
+<img
+src="Screenshots/MamaAnimation.gif"
+raw=true
+width="50%"
+height = "40%"
+/> 
+
+<img
+src="Screenshots/BoyAnimation.gif"
+raw=true
+width="50%"
+height = "40%"
+/> 
+
+<img
+src="Screenshots/HealthMeterAnimation.gif"
+raw=true
+width="50%"
+height = "40%"
+/> 
 <br>
